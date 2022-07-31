@@ -11,6 +11,8 @@ public class BucketCreator
     public void AddUser(string user)
     {
         var newBucket = new LeakyBucket(5, 1);
+        // change to effecient implementation
+        // this will outlive the leaky bucket and can have unexpected behaviour
         _ = new RequestProcessor(newBucket);
         bucket.Add(user, newBucket);
     }

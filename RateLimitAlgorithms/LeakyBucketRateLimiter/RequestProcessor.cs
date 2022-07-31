@@ -14,20 +14,23 @@ public class RequestProcessor
         {
             AutoReset = true
         };
-        _timer.Elapsed += HandleRequest;
+        // _timer.Elapsed += HandleRequest;
+        _timer.Elapsed += async (sender, e) => await HandleRequest();
         _timer.Enabled = true;
     }
 
-    private void HandleRequest(object? sender, ElapsedEventArgs e)
+    private Task HandleRequest()
     {
         var data = _bucket.Process();
 
         if (data == null)
         {
-            return;
+            return Task.CompletedTask;
         }
 
         Console.WriteLine($"processed data {data}");
+
+        return Task.CompletedTask;
     }
 }
 
